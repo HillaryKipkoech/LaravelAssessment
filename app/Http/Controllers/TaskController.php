@@ -12,69 +12,34 @@ class TaskController extends Controller
      */
     public function index()
     {
-                $tasks = Task::all();
-                return response()->json($tasks);
+            return Task::all();
         
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // store 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'status' => 'required|string'
-        ]);
-        $task = Task::create($validatedData);
-        return response()->json($task, 201);
+        $task = Task::create($request->all());
+        return response()-> json($task,201);
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Task $task)
     {
-        return response()->json($task);
+       return $task;
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        
-    }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Task $task)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'status'=> 'required|string',
-        ]);
-        $task->update($validatedData);
-        return response()->json($task);
+        $task -> update($request->all());
+        return response()->json($task,200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function delete(Task $task)
     {
-        $task->delete();
-        return response()->noContent();
+        $task ->delete();
+        return response()->json(null,204);
     }
 }
